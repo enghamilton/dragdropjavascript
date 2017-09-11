@@ -1,0 +1,152 @@
+<!doctype html>
+<html ng-app="myApp">
+	<head>
+		<title>My AngularJS App</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.6.2.js"></script>
+		<script   src="undefined/ui/1.8.24/jquery-ui.min.js"   integrity="sha256-UOoxwEUqhp5BSFFwqzyo2Qp4JLmYYPTHB8l+1yhZij8="   crossorigin="anonymous"></script> 
+		<style>
+		.red {
+			background-color: red;
+		}
+
+		#drop{
+			padding:30px;
+			border:1px solid red;
+		}
+
+		p {
+			padding:20px;
+			border: 1px dotted green;
+		}
+		</style>
+	</head>
+	<body>
+    <div id="drag" draggable="true">drag me</div>
+	<hr>
+	<div id="drop">
+		drop here
+		<p>child</p>
+		parent
+	</div>
+	<div class="makeText"></div>
+	<script type="text/javascript">
+	/*
+	https:// stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+	*/
+	function setColor() {
+		var x = document.body;
+		x.style.backgroundColor = x.style.backgroundColor == "yellow" ? "rgba(144,144,144,0.075)" : "yellow";
+	}
+
+	function stopColor(myVarStop) {
+		clearInterval(myVarStop);
+		var x = document.body;
+		x.style.backgroundColor = "rgba(144,144,144,0.075)";
+	}
+	
+	var counter = 0;
+
+	$('#drop').bind({
+		dragenter: function(ev) {
+		counter++;
+		$(this).addClass('red');
+		$('.makeText').text(counter);
+		
+		if(counter == 1){
+			myVar = setInterval(function(){ setColor() }, 500);
+		}
+		
+		ev.preventDefault();
+		},
+
+		dragleave: function() {
+		counter--;
+			if (counter === 0) { 
+			$(this).removeClass('red');
+			$('.makeText').text(counter);
+			
+			stopColor(myVar);
+			
+			}
+		}
+	});
+
+	$('#drag').bind({
+		dragstart: function(e) {
+			e = e.originalEvent;
+			e.effectAllowed = "copy";
+			e.dataTransfer.setData("text", "test");
+		}
+	});
+	
+	document.addEventListener ("keydown", function (zEvent) {
+		//var code = (e.keyCode ? e.keyCode : e.which);
+		var map = [];
+		map[zEvent.keyCode];
+		if ( (typeof map[91] === 'undefined' && typeof map[37] === 'undefined') ) {
+			//if(zEvent.keyCode === 91 || zEvent.keyCode === 37 || zEvent.keyCode === 38)
+			//alert('pressed key code : '+zEvent.keyCode+' '+JSON.stringify(map));
+			console.log(JSON.stringify(map))
+		} else {
+			console.log(JSON.stringify(map))
+		}
+	} );
+	
+	var your_array = [];
+
+	document.onkeydown = function (e) {
+	  var keyPress;
+
+	  if (typeof event !== 'undefined') {
+		keyPress = event.keyCode;
+	  }
+	  else if (e) {
+		keyPress = e.which;
+	  }
+
+	  //your_array.push(String.fromCharCode(keyPress));
+	  your_array.push(keyPress);
+	  
+	  console.log(JSON.stringify(your_array));
+
+	  return false;   // Prevents the default action
+	};
+
+	
+	document.addEventListener ("keyup", function (getKeyboardEvent) {
+		var availableKeys = [91, 37, 38, 39]; // "91 metaKey", "37 left arrow", "38 top arrow"
+		if (availableKeys.indexOf(getKeyboardEvent.which) != -1) {
+			
+		}
+	} );
+	
+	// https:stackoverflow.com/questions/5489946/jquery-how-to-wait-for-the-end-of-resize-event-and-only-then-perform-an-ac
+	$(window).resize(function() {
+		if(this.resizeTO) clearTimeout(this.resizeTO);
+		this.resizeTO = setTimeout(function() {
+			$(this).trigger('resizeEnd');
+		}, 500);
+	});
+
+	$(window).bind('resizeEnd', function() {
+		$("#width").text($(this).width());
+		$("#height").text($(this).height());
+	});
+	
+	var doit;
+	function resizedw(){
+		$("body").append("<br/>did it"+$(window).width()+' screen'+screen.width);
+	}
+	window.onresize = function() {
+		clearTimeout(doit);
+		doit = setTimeout(function() {
+			resizedw();
+		}, 100);
+	};
+	
+	</script>
+	Width: <span id="width"></span><br>
+	Height <span id="height"></span>
+</body>
+</html>
