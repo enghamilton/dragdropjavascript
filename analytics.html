@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>MyApp Analytics</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/profile/style.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="css/profile/profile.css" /> -->
+		<link rel="stylesheet" type="text/css" href="highslide/highslide.css" />
+		<!-- Font Awesome edit icon-->
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<!-- highslide slide gallery -->
+		<script type="text/javascript" src="highslide/highslide-full.js"></script>
+		<script type="text/javascript">
+		hs.graphicsDir = 'highslide/graphics/';
+		hs.align = 'center';
+		hs.transitions = ['expand', 'crossfade'];
+		hs.outlineType = 'rounded-white';
+		hs.fadeInOut = true;
+		hs.dimmingOpacity = 0.75;
+
+		// define the restraining box
+		hs.useBox = true;
+		hs.width = 640;
+		hs.height = 580;
+
+		// Add the controlbar
+		hs.addSlideshow({
+		//slideshowGroup: 'group1',
+		interval: 5000,
+		repeat: false,
+		useControls: true,
+		fixedControls: 'fit',
+			overlayOptions: {
+				opacity: 1,
+				position: 'bottom center',
+				hideOnMouseOut: true
+			}
+		});
+		</script>
+		<script src="dragdropjavascript/js/Chart.js"></script>
+		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+		<style>
+			canvas{
+			}
+		</style>
+  <style type="text/css">
+	@media only screen and (max-width: 400px) { .col-xs-4 { width: 50%; }}
+	@media only screen and (max-width: 400px) { #mobile { width: 100%; }}
+	.img-gal{ display: block; }
+  </style>
+</head>
+<body>
+	<!--
+	<div class="container-fluid">
+	
+		<h5><img height="20px" width="20px"> username lastname <span><small>+55(11)91234-5678.</small></span><a href="logout.php">Sair (Log Out)</a></h5>
+		
+	</div>
+	-->
+	
+	<nav class="navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+				<a class="navbar-brand" href="#">
+					<img alt="Brand" src="images/gpapplogo1.png" height="25px" style="margin-top:-3px;"/>
+				</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li style="font-weight:bold;font-size:20px;font-family:tahoma;margin-left:-20px;"><a href="mainpage.php">ppaapp.com.br uatiszap <span class="sr-only">(current)</span></a></li>
+				</ul>
+				<form class="navbar-form navbar-left">
+				<div class="form-group">
+				  <input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+				</form>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="profile.php?id=<?php echo $EditUserProfile->identification;?>" style="background-color:#FFFFFF;border:1px solid rgba(144,144,144,0.2);padding:5px 15px;border-radius:5px;margin-top:10px;">
+							<img src="images/900000202/profile_thumbnail_app2.png" height="25px" alt="nil">&nbsp <span>profile</span>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" style="width:150%;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							
+							&nbsp Alessandra Marcondelli &nbsp <span class="glyphicon glyphicon-menu-down"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="edit_profile.php?id=<?php echo $EditUserProfile->identification;?>" style="padding:10px;"><span class="glyphicon glyphicon-edit"></span> &nbsp Edit Profile</a></li>
+							<li><a href="#" style="padding:10px;"><span class="glyphicon glyphicon-usd"></span> &nbsp Payments</a></li>
+							<li><a href="analytics_profile.php?id=<?php echo $EditUserProfile->identification;?>" style="padding:10px;"><span class="glyphicon glyphicon-stats"></span> &nbsp Analytics <i style="font-size:11px;">(estat&iacutesticas)</i></a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="logout.php" style="padding:10px;"><span class="glyphicon glyphicon-log-out"></span> &nbsp Log Out <i style="font-size:11px;">(Sair)</i> </a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	
+
+	<div class="row" style="background:rgba(144,144,144,0.075);border-top:1px solid rgba(144,144,144,0.5);">
+		<div class="col-xs-3 col-sm-2 col-md-1"></div>
+		<div class="col-md-5" style="padding-right:1px;">
+			<div class="parent">
+				<div>
+					<?php
+						if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+						<div class="profile-pic">
+						<?php echo $EditUserProfile->cover_profile_image; ?>
+						<div class="edit"><a href="edit_profile.php?id=<?php echo $EditUserProfile->identification;?>"><i class="fa fa-camera fa-lg"></i></a></div>
+						</div>
+						<?php }
+						else {  ?>
+						<?php echo $UserProfile->cover_profile_image; ?>
+						<?php
+						}
+					?>
+				</div>
+				<div style="margin:0 auto;padding:3%;border:1px solid rgba(144,144,144,0.25);background:#FFFFFF;">
+					<table>
+						<tr>
+							<td>
+								<img src="images/profile.jpg" class="img-thumbnail" style="height:100px;width:100px;">
+							</td>
+							<td>
+								<table>
+								<tr>
+									<td style="padding-left:15px;">
+										
+										<?php
+											if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+												<?php
+													echo
+													'<div class="itemsContainer">
+														<div class="image">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'">'.$EditUserProfile->username.'</a>
+														</div>
+														<div class="play">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><i class="fa fa-pencil fa-lg"></i></a>
+														</div>
+													</div>';
+												?>
+											<?php }
+											else {  ?>
+												<?php echo $UserProfile->username;
+												?>
+											<?php
+												}
+										?>
+										
+										</br>
+										<?php
+											// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+											if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+												<?php //echo $EditUserProfile->username;
+													echo
+													'<div class="itemsContainer">
+														<div class="image">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'">'.$EditUserProfile->phone.'</a>
+														</div>
+														<div class="play">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><i class="fa fa-pencil fa-lg"></i></a>
+														</div>
+													</div>';
+												?>
+											<?php }
+											else {  ?>
+												<?php echo $UserProfile->phone;
+												?>
+											<?php
+												}
+										?>
+										
+									</td>
+									
+								</tr>
+								</table>
+							</td>
+						</tr>
+						
+					</table>
+					
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-5" style="background:#FFFFFF;">
+			<!--
+			<div style="font-family:Verdana, Geneva, sans-serif;font-size:12px;">
+				<div class="col-xs-6 col-md-3 text-nowrap">
+					<?php echo "Idade : ".$EditUserProfile->age." anos"; ?>
+				</div>
+				<div class="col-xs-6 col-md-3 text-nowrap">
+					<?php echo "Altura : ".$EditUserProfile->height." m"; ?>
+				</div>
+				<div class="col-xs-6 col-md-3 text-nowrap" style="border:1px dotted green;">
+					<a href="#" data-toggle="tooltip" data-placement="right" title="edit"><?php echo "Weight : ".$EditUserProfile->weight." kg"; ?></a>
+				</div>
+				<div class="col-xs-6 col-md-3 text-nowrap" style="border:1px dotted green;">1h : R$250</div>
+			</div>
+			-->
+			<!--<canvas id="canvas" width="450px" height="300px"></canvas>-->
+			<canvas id="canvas"></canvas>
+			<script>
+				/*
+				document.getElementById('canvas').getContext('2d');
+				document.getElementById('canvas').style.height = '300px';
+				document.getElementById('canvas').style.width = '450px';
+				*/
+				var lineChartData = {
+					labels : ["January","February","March","April","May","June","July"],
+					datasets : [
+						{
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,1)",
+							pointColor : "rgba(220,220,220,1)",
+							pointStrokeColor : "#fff",
+							data : [65,59,90,81,56,55,40]
+						},
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							pointColor : "rgba(151,187,205,1)",
+							pointStrokeColor : "#fff",
+							data : [28,48,40,19,96,27,100]
+						}
+					]
+
+				}
+				var options = {
+					animation:false
+					}
+				var ctx = document.getElementById("canvas").getContext("2d");
+				ctx.canvas.width = 450;
+				//alert($(".parent").offsetHeight);
+				ctx.canvas.height = $('.col-md-5').height() - 10;
+				var myLine = new Chart(ctx).Line(lineChartData, options);
+				$(document).ready(function(){
+					
+				});
+			</script>
+			
+		</div>
+		<div class="col-md-1" style="border:1px solid rgba(125,125,125,0.5)"></div>
+	</div>
+	
+	<!--
+	<div class="jumbotron text-center">
+		<h4>Username lastname &nbsp <small>+55(11)91234-5678</small></h4>
+	</div>
+	-->
+	
+<div class="container">
+	
+	<div class="panel panel-default" style="font-family:Verdana, Geneva, sans-serif;font-size:13px;margin-top:5px;padding:5px;">
+		
+			<div class="row">
+				<div class="col-xs-4 col-md-2">
+					<?php
+						// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+						if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+							<?php //echo $EditUserProfile->username;
+								echo
+								'<div class="itemsContainer">
+									<div class="image">
+										<a href="edit_profile.php?id='.$EditUserProfile->identification.'">Age : '.$EditUserProfile->age.' yr</a>
+									</div>
+									<div class="play">
+										<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><i class="fa fa-pencil fa-lg"></i></a>
+									</div>
+								</div>';
+							?>
+						<?php }
+						else {  ?>
+							<?php echo "Age : ".$UserProfile->age."yr";
+							?>
+						<?php
+							}
+					?>
+				</div>
+				<div class="col-xs-4 col-md-2">
+					<?php
+						// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+						if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+							<?php //echo $EditUserProfile->username;
+								echo
+								'<div class="itemsContainer">
+									<div class="image">
+										<a href="edit_profile.php?id='.$EditUserProfile->identification.'">Height : '.$EditUserProfile->age.' m</a>
+									</div>
+									<div class="play">
+										<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><i class="fa fa-pencil fa-lg"></i></a>
+									</div>
+								</div>';
+							?>
+						<?php }
+						else {  ?>
+							<?php echo "Height : ".$UserProfile->age." m";
+							?>
+						<?php
+							}
+					?>
+				</div>
+				<div class="col-xs-4 col-md-2">Peso : XY kg</div>
+				<div class="col-xs-4 col-md-2">Hair : blond</div>
+				<div class="col-xs-4 col-md-2">Feet size : 37</div>
+				<div class="col-xs-4 col-md-2">Feet size : 37</div>
+			</div>
+		
+			<div class="row">
+				<div class="col-xs-4 col-md-2" id="mobile">Allow smoke : Yes</div>
+				<div class="col-xs-4 col-md-2" id="mobile" style="background-color:lavender;">Price : R$250</div>
+				<div class="col-xs-4 col-md-2" id="mobile">travel : available YES</div>
+				<div class="col-xs-4 col-md-2" id="mobile">Do this : YES</div>
+				<div class="col-xs-4 col-md-2" id="mobile">available : full time</div>
+				<div class="col-xs-4 col-md-2" id="mobile">available : full time</div>
+			</div>
+		
+	</div>
+	
+	<div class="row">
+		
+		<div class="col-sm-4 revenues" id="col-sm-4-revenues">
+		  <h5>Revenues</h5>
+		  
+		  <canvas id="canvasBarChartRevenues" style="margin:0 auto;display:block;"></canvas>
+			
+			<script>
+
+				var barChartData = {
+					labels : ["Jan/07","Feb/07","Mar/17","April","May","June","July"],
+					datasets : [
+						{
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,1)",
+							data : [4000,5250,4750,5500,6500,4250,4500]
+						},
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							data : [5000,4000,4500,3750,4750,5000,5250]
+						}
+					]
+					
+				}
+				var options = {
+					animation:false,
+					scaleOverride: true, scaleStartValue: 3000, scaleStepWidth: 500, scaleSteps: 6
+				}
+				var cxtLineRevenues = document.getElementById("canvasBarChartRevenues").getContext("2d");
+				cxtLineRevenues.canvas.width = $('#col-sm-4-revenues').width() * 1.12;
+				cxtLineRevenues.canvas.height = $('#col-sm-4-revenues').width() * 0.85;
+				//var myLineRevenues = new Chart(document.getElementById("canvasBarChartRevenues").getContext("2d")).Bar(barChartData, options);
+				var myLineRevenues = new Chart(cxtLineRevenues).Bar(barChartData, options);
+			
+			</script>
+		  
+		</div>
+		
+		<div class="col-sm-4">
+		  <h5>Chart - Daily customer atending (Average XY)</h5>
+		  
+		  <canvas id="canvasBarChart" height="300px" width="400px" style="margin:0 auto;display:block;"></canvas>
+			
+			<script>
+
+				var barChartData = {
+					labels : ["Sun","Mon","Thu","Wed","Thu","Fri","Sat"],
+					datasets : [
+						{
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,1)",
+							data : [0,4,0,2,1,0,3]
+						},
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							data : [1,4,5,3,2,4,3]
+						}
+					]
+					
+				}
+				var options = {
+					animation:false,
+					scaleOverride: true, scaleStartValue: 0, scaleStepWidth: 1, scaleSteps: 6
+				}
+				var myLineDailyCustomerAtending = new Chart(document.getElementById("canvasBarChart").getContext("2d")).Bar(barChartData, options);
+			</script>
+		  
+		</div>
+		
+		<div class="col-sm-4">
+		  <h5>Views (visitors)</h5>
+		  
+		  <canvas id="canvasBarChartPageView" height="300px" width="400px" style="margin:0 auto;display:block;"></canvas>
+			
+			<script>
+
+				var barChartData = {
+					labels : ["Jan/07","Feb/07","Mar/17","April","May","June","July"],
+					datasets : [
+						{
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,1)",
+							data : [4000,4250,4500,4750,3750,4000,4250]
+						},
+						{
+							fillColor : "rgba(151,187,205,0.5)",
+							strokeColor : "rgba(151,187,205,1)",
+							data : [5000,4000,4500,3750,4750,5000,5250]
+						}
+					]
+					
+				}
+				var options = {
+				animation:false
+				}
+			var myLineViews = new Chart(document.getElementById("canvasBarChartPageView").getContext("2d")).Bar(barChartData, options);
+			
+			</script>
+		  
+		</div>
+		
+	</div>
+</div>
+
+<div id="gallery" class="container">
+  <h5>Image Gallery</h5>
+  <p>The .thumbnail class can be used to display an image gallery. Click on the images to see it in full size:</p>            
+  <div class="row">
+    <div class="col-md-3">
+      <a href="pulpitrock.jpg" class="thumbnail">
+        <p>Agenda</p>    
+        <img src="pulpitrock.jpg" alt="Pulpit Rock" style="width:150px;height:150px">
+      </a>
+    </div>
+    <div class="col-md-5">
+      <a href="moustiers-sainte-marie.jpg" class="thumbnail">
+        <p>Main Photo Gallery</p>
+		<div class="wrapper">
+			<div id="container" style="width:100%;height:100%;"></div>
+		</div>
+		<span id="initial-col-md-5" ></span>
+		<span id="actual-col-md-5" ></span>
+		<span id="actual-window" ></span>
+		<script type="text/javascript">
+		$(function () {
+			$('#container').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false
+			   },
+				title: {
+					text: 'Responsive Resize'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true
+						}
+					}
+				},
+				series: [{
+					type: 'pie',
+					name: 'Browser share',
+					data: [
+						['Firefox', 45.0],
+						['IE',      26.8],
+						['Safari',  8.5],
+						['Opera',   6.2],
+						['Others',  0.7]
+					]
+				}]
+			});
+			
+			$(window).resize(function(){
+				var chart = $('#container').highcharts();
+				
+				console.log('redraw');
+				var w = $('#container').closest(".wrapper").width()
+				// setsize will trigger the graph redraw 
+				chart.setSize(       
+					w,w * (3/4),false
+				);
+			});
+			
+		});
+		
+		$(document).ready(function() {
+			windowSizeWidth = $(window).width();
+			navbarWidth1 = $('.col-md-1').width();
+			navbarWidth5 = $('.col-md-5').width();
+			//alert(navbarWidth);
+			$('#initial-col-md-1').text('initial col-md-1 : '+navbarWidth1);
+			$('#initial-col-md-5').text('initial col-md-5 : '+navbarWidth5+' height : '+$('.col-md-5').height()+' ;');
+			
+			if(windowSizeWidth < 970){
+				$('.navbar-brand').css('margin-left', 5);
+				var navBarMarginRight = (navbarWidth1 * 3);
+				$('.navbar-right').css('margin-right',navBarMarginRight);
+			} else {
+				var navBarMarginLeft = navbarWidth1;
+				$('.navbar-brand').css('margin-left', navBarMarginLeft);
+				var navBarMarginRight = (navbarWidth1 * 3);
+				$('.navbar-right').css('margin-right',navBarMarginRight);
+			}
+		});
+		</script>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="cinqueterre.jpg" class="thumbnail">
+        <p>Maps, Services</p>      
+        <img src="cinqueterre.jpg" alt="Cinque Terre" style="width:150px;height:150px">
+      </a>
+    </div>
+  </div>
+</div>
+	
+</body>
+</html>
