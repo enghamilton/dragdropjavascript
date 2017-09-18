@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Feibook</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="bootstrap.min.css" rel="stylesheet">
+		<!-- Latest compiled and minified CSS -->
+		<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  -->
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<link href="style.css" rel="stylesheet">
+		<style>
+			@media only screen and (max-width : 540px) 
+			{
+				.chat-sidebar
+				{
+					display: none !important;
+				}
+				.chat-popup
+				{
+					display: none !important;
+				}
+			}
+
+			.chat-sidebar
+			{
+				width: 200px;
+				position: fixed;
+				height: 100%;
+				right: 0px;
+				top: 50px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				border: 1px solid rgba(29, 49, 91, .3);
+			}
+
+			.sidebar-name 
+			{
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-bottom: 4px;
+				font-size: 12px;
+			}
+
+			.sidebar-name span
+			{
+			padding-left: 5px;
+			}
+
+			.sidebar-name a
+			{
+			display: block;
+			height: 100%;
+			text-decoration: none;
+			color: inherit;
+			}
+
+			.sidebar-name:hover
+			{
+			background-color:#e1e2e5;
+			}
+
+			.sidebar-name img
+			{
+			width: 32px;
+			height: 32px;
+			vertical-align:middle;
+			}
+			.sidebar-name i
+			{
+			width: 32px;
+			height: 32px;
+			vertical-align:middle;
+			}
+
+			.popup-box
+			{
+			position: fixed;
+			bottom: 0px;
+			right: 220px;
+			height: 285px;
+			background-color: rgb(237, 239, 244);
+			width: 300px;
+			border: 1px solid rgba(29, 49, 91, .3);
+			}
+
+			.popup-box .popup-head
+			{
+			background-color: #6d84b4;
+			padding: 5px;
+			color: white;
+			font-weight: bold;
+			font-size: 14px;
+			clear: both;
+			}
+
+			.popup-box .popup-head .popup-head-left
+			{
+			float: left;
+			}
+
+			.popup-box .popup-head .popup-head-right
+			{
+			float: right;
+			opacity: 0.5;
+			}
+
+			.popup-box .popup-head .popup-head-right a
+			{
+			text-decoration: none;
+			color: inherit;
+			}
+
+			.popup-box .popup-messages
+			{
+			height: 73%;
+			overflow-y: scroll;
+			}
+			
+			.popup-box .popup-textarea
+			{
+			margin-bottom: 0;
+			border:2px solid orange;
+			width: 100%;
+			}
+			
+			textarea{
+			margin-bottom:0;
+			width:100%;
+			}
+         </style>
+		
+		<script type="text/javascript">
+			
+            //this function can remove a array element.
+            Array.remove = function(array, from, to) {
+				var rest = array.slice((to || from) + 1 || array.length);
+				array.length = from < 0 ? array.length + from : from;
+				return array.push.apply(array, rest);
+            };
+        
+            //this variable represents the total number of popups can be displayed according to the viewport width
+            var total_popups = 0;
+            
+            //arrays of popups ids
+            var popups = [];
+        
+			function test_close(id){
+				document.getElementById(id).style.cssText = "display:none";
+				
+			}
+            //this is used to close a popup
+            function close_popup(id)
+            {
+                for(var iii = 0; iii < popups.length; iii++)
+                {
+                    if(id == popups[iii])
+                    {
+                        Array.remove(popups, iii);
+                        
+                        document.getElementById(id).style.display = "none";
+                        
+						calculate_popups();
+                        
+                        return;
+                    }
+                }   
+            }
+        
+            //displays the popups. Displays based on the maximum number of popups that can be displayed on the current viewport width
+            function display_popups()
+            {
+                var right = 220;
+                
+                var iii = 0;
+                for(iii; iii < total_popups; iii++)
+                {
+                    if(popups[iii] != undefined)
+                    {
+                        var element = document.getElementById(popups[iii]);
+                        element.style.right = right + "px";
+                        right = right + 320;
+                        element.style.display = "block";
+                    }
+                }
+                
+				for(var jjj = iii; jjj < popups.length; jjj++)
+                {
+                    var element = document.getElementById(popups[jjj]);
+                    element.style.display = "none";
+                }
+            }
+            
+            //creates markup for a new popup. Adds the id to popups array.
+            function register_popup(id, name)
+            {
+				var myRandPrefix = Math.floor((Math.random() * 100) + 1);
+                for(var iii = 0; iii < popups.length; iii++)
+                {
+					//already registered. Bring it to front.
+                    if(myRandPrefix+id == popups[iii])
+                    {
+                        //removes here
+						Array.remove(popups, iii);
+						
+                        //but as removed above, now just include in first node of array UNSHIFT
+						popups.unshift(myRandPrefix+id);
+						
+                        calculate_popups();
+                        
+                        return;
+                    }
+                }
+                
+				/*
+                var element = '<div class="popup-box chat-popup" id="'+ id +'">';
+				element = element + '<div class="popup-head">';
+				element = element + '<div class="popup-head-left">'+ name +'</div>';
+				element = element + '<div class="popup-head-right"><a href="javascript:close_popup(\''+ id +'\');">&#10005;</a></div>';
+				element = element + '<div style="clear: both"></div></div><div class="popup-messages"></div></div>';
+
+				document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + element;
+				*/
+
+				var elemDiv = document.createElement('div');
+				elemDiv.className = 'popup-box chat-popup';
+				elemDiv.setAttribute('id',myRandPrefix+id);
+				
+				var elemDiv1 = document.createElement('div');
+				elemDiv1.className = 'popup-head';
+				
+				var elemDiv2 = document.createElement('div');
+				elemDiv2.className = 'popup-head-left';
+				elemDiv2.innerHTML = name;
+				
+				var elemDiv3 = document.createElement('div');
+				elemDiv3.className = 'popup-head-right';
+				//var elemDiv3a = document.createElement('a');
+				//elemDiv3a.innerHTML = 'onclick:close_popup(\''+id+'\'); return false; &#10005;';
+				//elemDiv3.appendChild(elemDiv3a);
+				//elemDiv3.innerHTML = '<a href="javascript:close_popup(\''+id+'\'); return false;">&#10005;</a>';
+				elemDiv3.innerHTML = '<a href="#">&#10005;</a>';
+				//elemDiv3.innerHTML = '<a href="javascript:void(0)" onclick="javascript:close_popup(\''+id+'\'); return false;">&#10005;</a>';
+				elemDiv3.onclick = function(e){
+					e.preventDefault();
+					var id_close_popup = this.parentElement.parentElement.id;
+					//alert(id_close_popup);
+					close_popup(id_close_popup);
+				}
+				var elemDiv4 = document.createElement('div');
+				elemDiv4.style.cssText = 'clear:both;';
+				
+				var elemDiv5 = document.createElement('div');
+				elemDiv5.className = 'popup-messages';
+				
+				var elemDiv6 = document.createElement('div');
+				elemDiv6.className = 'popup-textarea';
+				elemDiv6.innerHTML = '<textarea>Write you message. Press Enter.</textarea>';
+				
+				elemDiv1.appendChild(elemDiv2);elemDiv1.appendChild(elemDiv3);elemDiv1.appendChild(elemDiv4);
+				elemDiv.appendChild(elemDiv1);elemDiv.appendChild(elemDiv5);elemDiv.appendChild(elemDiv6);
+				
+				//elemDiv.style.cssText = 'display: block;position: fixed;bottom: 0px;right: 210px;height: 285px;background-color: rgb(237, 239, 244);width: 300px;border: 1px solid rgba(29, 49, 91, .3);';
+				document.body.appendChild(elemDiv);
+				
+				//unshift unshift() method adds new items to the beginning of an array, and returns the new length
+				popups.unshift(myRandPrefix+id);
+
+				calculate_popups();
+				return;
+            }
+             
+			//calculate the total number of popups suitable and then populate the toatal_popups variable.
+			function calculate_popups()
+			{
+				var width = window.innerWidth;
+				if(width < 540)
+                {
+                    total_popups = 0;
+                }
+                else
+                {
+                    width = width - 200;
+                    //320 is width of a single popup box
+                    total_popups = parseInt(width/320);
+                }
+                
+                display_popups();
+                
+            }
+            
+            //recalculate when window is loaded and also when window is resized.
+            window.addEventListener("resize", calculate_popups);
+            window.addEventListener("load", calculate_popups);
+            
+			$(document).ready( function(){
+				$("li").click(function(e) {
+				  e.preventDefault();
+				  $("li").removeClass("selected");
+				  $(this).addClass("selected");
+				});
+				
+				$(".popup-box chat-popup .popup-head-right a").click(function(e) {
+					e.preventDefault();
+					//close_popup(id);
+					alert('hello world, clicked');
+				});
+				
+				var obj = $("#draganddrophandler");
+				obj.css("border","2px dotted #0B85A1");
+				obj.css("color","#92AAB0");
+				obj.css("text-align","center");
+				obj.css("vertical-align","middle");
+				obj.css("padding","30px 0 50px 0");
+				obj.css("margin-bottom","10px");
+				obj.css("font-size","100%");
+				obj.on('dragenter', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+					this_border = $(this);
+					this.blink = setInterval(function () {
+						this_border.css('border', function () {
+							this.switch = !this.switch
+							return this.switch ? '2px solid #0B85A1' : '2px dotted #0B85A1' ;
+						});
+					}, 500);
+				});
+				/*
+				obj.on('dragover', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+				});
+				*/
+				obj.on('dragleave', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+					//$(this).stop();
+					clearInterval(this.blink);
+					this_border.css('border', '2px dotted #0B85A1');
+					//alert('you leave out');
+				});
+				
+				obj.on('drop', function (e) 
+				{
+					var stopblink = clearInterval(this.blink);
+					 $(this).css('border', '2px dotted #0B85A1');
+					 e.preventDefault();
+					 var files = e.originalEvent.dataTransfer.files;
+				 
+					 //We need to send dropped files to Server
+					 //handleFileUpload(files,obj);
+				});				
+			
+			
+			});
+        </script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="box">
+				<div class="row row-offcanvas row-offcanvas-left">
+					<!-- sidebar -->
+					<div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+
+						<ul class="nav">
+							<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+						</ul>
+
+						<ul class="nav hidden-xs" id="lg-menu">
+							<li class="active"><a href="whiteboard.xhtml"><i class="glyphicon glyphicon-blackboard"></i> Whiteboard</a></li>
+							<li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Library</a></li>
+							<li><a href="#stories"><i class="glyphicon glyphicon-comment"></i> Messages</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Attach</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-open"></i> Upload file</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> File download</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-folder-open"></i> Folder</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-file"></i> File</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Calendar (exams)</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-wrench"></i> Setup</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-globe"></i> Find</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-send"></i> Send</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-earphone"></i> Call</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-save-file"></i> Save File</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-refresh"></i> Refresh</a></li>
+						</ul>
+						
+						<ul class="list-unstyled hidden-xs" id="sidebar-footer">
+							<li>
+							  <a href="http://www.bootply.com"><h3>Usernãme</h3> <i class="glyphicon glyphicon-heart-empty"></i> Engenharia Mecânica</a>
+							</li>
+						</ul>
+						
+						<!-- tiny only nav-->
+						<ul class="nav visible-xs" id="xs-menu">
+							<li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+							<li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+							<li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+						</ul>
+
+					</div>
+					<!-- /sidebar -->
+					  
+					<!-- main right col -->
+					<div class="column col-sm-10 col-xs-11" id="main">
+						<!-- top nav -->
+						<div class="navbar navbar-blue navbar-static-top">
+							<div class="navbar-header">
+								<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+									<span class="sr-only">Toggle</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<!--  <a href="/" class="navbar-brand logo">fei</a> -->
+								<img src="feibook-logo9.jpg"/>
+							</div>
+							
+							<nav class="collapse navbar-collapse" role="navigation" id="bootstrap-collapse-tablet">
+								<form class="navbar-form navbar-left">
+									<div class="input-group input-group-sm" style="max-width:360px;">
+										<input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+										<div class="input-group-btn">
+											<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+										</div>
+									</div>
+								</form>
+								
+								<ul class="nav navbar-nav">
+									<li>
+										<a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+									</li>
+									<li>
+										<a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Post</a>
+									</li>
+									<li>
+										<a href="#"><span class="badge">badge</span></a>
+									</li>
+								</ul>
+								
+								<ul class="nav navbar-nav navbar-right">
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
+											<ul class="dropdown-menu">
+												<li><a href=""><span class="glyphicon glyphicon-edit"></span> &nbsp; Edit</a></li>
+												<li><a href=""><span class="glyphicon glyphicon-usd"></span> &nbsp; Payments</a></li>
+												<li><a href=""><span class="glyphicon glyphicon-stats"></span>  &nbsp; Analytics <i style="font-size:11px;">(estat&iacute;sticas)</i></a></li>
+												<li><a href=""> &nbsp; Rides </a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href=""><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out <i style="font-size:11px;">(Sair)</i></a></li>
+											</ul>
+									</li>
+								</ul>
+							
+							</nav>
+						</div>
+						<!-- /top nav -->
+							
+						
+							
+						<div class="padding"><!--  padding   -->						
+						
+							<div class="full col-sm-12 col-xs-12">
+								
+								<!-- content -->
+								<div class="row">
+
+									<!-- <div id="draganddrophandler">Drag your files here. Arraste e solte seu arquivos aqui.</div> -->
+								  
+									<!-- main col left --> 
+									<div class="col-sm-10">
+
+										<script type="text/javascript">
+											$(document).ready(function(){
+												var a = performance.now();
+												
+												getTabWidth = $('.col-sm-10').width();
+												getTabWidth2 = $('.col-sm-2').width();
+												//$('.col-sm-10').css('border','2px dotted #77CCDD');
+												calc_width = (getTabWidth - getTabWidth2 - 36);
+												//alert(calc_width);
+												$('#tab').css('width',calc_width);
+												$('#tab').css('position','fixed');
+												$('#tab').css('z-index','2');
+												
+												
+												$(window).resize(function(){
+													resizeTabWidth1 = $('.col-sm-10').width();
+													resizeTabWidth2 = $('.col-sm-2').width();
+													resizeCalc = resizeTabWidth1 - resizeTabWidth2;
+													//alert(resizeCalc);
+													if(resizeCalc < 768) {
+														$('#tab').css('width',(resizeCalc -36));
+													} else {
+														var resizeCalcLargeScreen = (resizeCalc -36);
+														$('#tab').css('width',resizeCalcLargeScreen);
+													}
+												}); 
+												
+												var b = performance.now();
+
+											});
+										</script>
+										
+										<div class="panel panel-default">
+											<div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Title</h4></div>
+											<div class="panel-body">
+
+											<div class="draganddrophandler" draggable="true" id="draganddrophandler" style="z-index:2;">Arrasta y solta en la carpecha aqui.</div>
+											
+											<div class="list-group">
+											<a class="list-group-item">File1.jpg</a>
+											<a class="list-group-item">File2.doc</a>
+											<a class="list-group-item">File3.mp3</a>
+											<a class="list-group-item">File4.jpg</a>
+											<a class="list-group-item">File5.doc</a>
+											<a class="list-group-item">File6.mp3</a>
+											<a href="" class="list-group-item">http://bootply.com/tagged/modal</a>
+											<a href="" class="list-group-item">http://bootply.com/tagged/datetime</a>
+											<a href="" class="list-group-item">http://bootply.com/tagged/datatable</a>
+											</div>
+											</div>
+										</div>
+									  
+										
+										<div class="panel panel-default">
+											<div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Stackoverflow</h4></div>
+											<div class="panel-body">
+												<img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Keyword: Bootstrap</a>
+												<div class="clearfix"></div>
+												<hr>
+												<p>If you're looking for help with Bootstrap code, the <code>twitter-bootstrap</code> tag at <a href="http://stackoverflow.com/questions/tagged/twitter-bootstrap">Stackoverflow</a> is a good place to find answers.</p>
+												<hr>
+												<form>
+												<div class="input-group">
+												<div class="input-group-btn">
+												<button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+												</div>
+												<input type="text" class="form-control" placeholder="Add a comment..">
+												</div>
+												</form>
+											</div>
+										</div>
+									   
+										<div class="well"> 
+											<form class="form-horizontal" role="form">
+												<h4>What's New</h4>
+												<div class="form-group" style="padding:14px;">
+												<textarea class="form-control" placeholder="Update your status"></textarea>
+												</div>
+												<button class="btn btn-primary pull-right" type="button">Post</button>
+												<ul class="list-inline">
+												<li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
+												<li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
+												<li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li>
+												<li><a href=""><i class="glyphicon glyphicon-cloud-upload"></i></a></li>
+												<li><a href=""><i class="glyphicon glyphicon-lamp"></i></a></li>
+												<li><a href=""><i class="glyphicon glyphicon-download-alt"></i></a></li>
+												</ul>
+											</form>
+										</div>
+
+									</div><!-- /col-sm-10 -->
+								  
+									<!-- main col right -->
+									<div class="col-sm-2">
+										
+										<div class="chat-sidebar hidden-xs">
+											<div class="sidebar-name">
+												<!-- Pass username and display name to register popup -->
+												<a href="javascript:register_popup('user01', 'User#01');">
+													<span class="glyphicon glyphicon-user" style="font-size:2.5em;"></span>
+													<span>User#01</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('user02', 'User#02');">
+													<span class="glyphicon glyphicon-user" style="font-size:2.5em;"></span>
+													<span>User#02</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('user03', 'User#03');">
+													<span class="glyphicon glyphicon-user" style="font-size:2.5em;"></span>
+													<span>User#03</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('user4', 'User#04');">
+													<span class="glyphicon glyphicon-user" style="font-size:2.5em;"></span>
+													<span>User#04</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('user5', 'User#05');">
+													<span class="glyphicon glyphicon-user" style="font-size:2.5em;"></span>
+													<span>User#05</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('qblock', 'QBlock');">
+													<img src="https://lh4.googleusercontent.com/-6aFMDiaLg5M/AAAAAAAAAAI/AAAAAAAABdM/XjnG8z60Ug0/s28-c-k-no/photo.jpg" width="30px" height="30px">
+													<span>QBlock</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('Savaresi', 'Savaresi');">
+													<img width="30px" height="30px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1510656_10203002897620130_521137935_n.jpg?oh=572eaca929315b26c58852d24bb73310&oe=54BEE7DA&__gda__=1418131725_c7fb34dd0f499751e94e77b1dd067f4c" />
+													<span>Profª Maria Angela Savaresi</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('Ieno', 'Ieno');">
+													<img width="30px" height="30px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1510656_10203002897620130_521137935_n.jpg?oh=572eaca929315b26c58852d24bb73310&oe=54BEE7DA&__gda__=1418131725_c7fb34dd0f499751e94e77b1dd067f4c" />
+													<span>Profº Gilberto Oswaldo Ieno</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('Maluf', 'Maluf');">
+													<img width="30px" height="30px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1510656_10203002897620130_521137935_n.jpg?oh=572eaca929315b26c58852d24bb73310&oe=54BEE7DA&__gda__=1418131725_c7fb34dd0f499751e94e77b1dd067f4c" />
+													<span>Profº William Manjud Maluf Filho</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('Shizuo', 'Shizuo');">
+													<img width="30px" height="30px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1510656_10203002897620130_521137935_n.jpg?oh=572eaca929315b26c58852d24bb73310&oe=54BEE7DA&__gda__=1418131725_c7fb34dd0f499751e94e77b1dd067f4c" />
+													<span>Profº Silvio Shizuo Sumiyoshi</span>
+												</a>
+											</div>
+											<div class="sidebar-name">
+												<a href="javascript:register_popup('Simone', 'Simone');">
+													<img width="30px" height="30px" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p50x50/1510656_10203002897620130_521137935_n.jpg?oh=572eaca929315b26c58852d24bb73310&oe=54BEE7DA&__gda__=1418131725_c7fb34dd0f499751e94e77b1dd067f4c" />
+													<span>Profª Simone Batista</span>
+												</a>
+											</div>
+										</div>
+										
+									</div>
+								  
+								</div><!--/row-->
+
+							</div><!-- /full col-9 -->
+							
+						</div>
+						<!-- /padding -->
+					  
+					</div><!--  /main right column  -->
+					
+				</div><!-- row off-canvas-left -->
+				
+			</div><!-- /box  -->
+			
+		</div><!--  /wrapper  -->
+		
+		<!--post modal-->
+		<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						Update Status
+					</div>
+					
+					<div class="modal-body">
+						<form class="form center-block">
+						<div class="form-group">
+						<textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+						</div>
+						</form>
+					</div>
+				
+					<div class="modal-footer">
+						<div>
+							<button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+							<ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<!-- script references -->
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
