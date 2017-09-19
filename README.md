@@ -10,20 +10,26 @@ Mira los arquivos profile.html (para el javascript de drag and drop upload) y ta
 de la border CSS).
 
 https://enghamilton.github.io/dragdropjavascript/dragndropblink.html
+Testado no IE10 (desktop), deveria funcionar no Chrome (desktop).
 
 https://enghamilton.github.io/dragdropjavascript/mainpage.html
+Funcionou no IE10 e Chrome (laptop ambos 13" tela). Works ins IE10 and Chrome (laptop both).
 
 Página de internet mostrando gráficos para medir a quantidade de acessos a uma determinada página de seu site, contagem de dinheiro 
 recebido do pagamento efetuado pelo seu cliente através de arquivo de retorno emitido por banco quando é creditado o pagamento de 
 boleto bancário.
 
 https://enghamilton.github.io/dragdropjavascript/analytics.html
+Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
 https://enghamilton.github.io/dragdropjavascript/boleto_3meses.html
+Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
 Recorte de área de foto, gera uma área quadrada ou retângular para selecionar parte de uma foto, útil para exibição
 de face de usuário ou para exibir parte relevante de uma imagem.Simple image crop image using javascript imgareaselect.
 
 https://enghamilton.github.io/dragdropjavascript/userprofile_crop_image.html
+Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
 https://enghamilton.github.io/dragdropjavascript/crop_image.html
+Testado no IE10 e Chrome (laptop 13" tela Windows 7).
