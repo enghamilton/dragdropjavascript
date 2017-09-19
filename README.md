@@ -24,3 +24,5 @@ https://enghamilton.github.io/dragdropjavascript/boleto_3meses.html
 Simple image crop image using javascript imgareaselect.
 
 https://enghamilton.github.io/dragdropjavascript/userprofile_crop_image.html
+
+https://enghamilton.github.io/dragdropjavascript/crop_image.html
