@@ -25,8 +25,9 @@ Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 https://enghamilton.github.io/dragdropjavascript/boleto_3meses.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
-Recorte de área de foto, gera uma área quadrada ou retângular para selecionar parte de uma foto, útil para exibição
-de face de usuário ou para exibir parte relevante de uma imagem.Simple image crop image using javascript imgareaselect.
+Recorte de área de foto, clicando gera uma área quadrada ou retângular que pode ser redimensionada para selecionar 
+parte de uma foto, útil para exibição de face de usuário ou para exibir uma determinada área.
+Simple image crop image using javascript imgareaselect.
 
 https://enghamilton.github.io/dragdropjavascript/userprofile_crop_image.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
