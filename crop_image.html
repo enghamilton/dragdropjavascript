@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="pt-BR" manifest="profile.appcache">
+<head>
+	<title>MyApp profile</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="http://fonts.googleapis.com/css?family=Oxygen:400,700,300" rel="stylesheet" type="text/css" />
+	<!-- jquery_crop UI dialog -MODAL-, -IMAGE CROP- and -AGENDA-  -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> original 3.1.1 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- bootstrap  -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/profile/style.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/profile/profile.css" /> -->
+	<link rel="stylesheet" type="text/css" href="highslide/highslide.css" />
+	<!-- Font Awesome edit icon-->
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<!-- highslide slide gallery -->
+	<script type="text/javascript" src="highslide/highslide-full.js"></script>
+	<script type="text/javascript">
+	hs.graphicsDir = 'highslide/graphics/';
+	hs.align = 'center';
+	hs.transitions = ['expand', 'crossfade'];
+	hs.outlineType = 'rounded-white';
+	hs.fadeInOut = true;
+	hs.dimmingOpacity = 0.75;
+	hs.expandCursor = null;
+	hs.restoreCursor = null;
+
+	// define the restraining box
+	hs.useBox = true;
+	hs.width = 640;
+	hs.height = 580;
+
+	// Add the controlbar
+	hs.addSlideshow({
+	//slideshowGroup: 'group1',
+	interval: 5000,
+	repeat: false,
+	useControls: true,
+	fixedControls: 'fit',
+		overlayOptions: {
+			opacity: 1,
+			position: 'bottom center',
+			hideOnMouseOut: true
+		}
+	});
+	</script>
+	
+	<!--  fullcalendar  -->
+	
+	<link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
+	<link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.print.css' media='print' />
+	<!-- fullcalendar/jquery/jquery-1.8.1.min.js conflicts with  -->
+	<!-- dialog modal cropimage thumbnail http://code.jquery.com/jquery-1.10.2.js -->
+	<!-- <script type='text/javascript' src='fullcalendar/jquery/jquery-1.8.1.min.js'></script> -->
+	<script type='text/javascript' src='fullcalendar/jquery/jquery-ui-1.8.23.custom.min.js'></script>
+	<script type='text/javascript' src='fullcalendar/fullcalendar.js'></script>
+	
+	<!--  resizeEnd -->
+	<script   src="undefined/ui/1.8.24/jquery-ui.min.js"   integrity="sha256-UOoxwEUqhp5BSFFwqzyo2Qp4JLmYYPTHB8l+1yhZij8="   crossorigin="anonymous"></script> 
+
+	<!--  Dynamic Event Day Scheduler CalendarDay  -->
+	<!--
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	-->
+	<script src="js/jquery-layoutday.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/profile/jquery-layoutday.css">
+	<script>
+		
+		var layOutDay = function (cal_events){
+		  $('#calendarDay').addEvents(cal_events);
+		};
+		
+		
+		$( document ).ready(function() {
+			$('#calendarDay').layOutDay({
+			  'calendar_start': (60*9),//540,
+			  'calendar_end': (60*14.5),//1260,
+			  'time_selector': 'body .time'
+			});
+
+			/*
+			calendarEvent = {
+								dateStart: new Date(year,month,day,hour,minute,senconds,milliseconds),
+								dateEnd: new Date(year,month,day,hour,minute,senconds,milliseconds),
+								title: "title goes here",
+								description: "write some description"
+							}
+			*/
+			
+			calendarEvent0 = {
+								dateStart: new Date(/* year */ 2017, /* month */ 01,  /* day */ 09, /* hour */ 10, /* minute */ 00, /* senconds */ 10, /* milliseconds */ 10),
+								dateEnd: new Date(/* year */ 2017, /* month */ 01, /* day */ 09, /* hour */ 11, /* minute */ 00, /* senconds */ 10, /* milliseconds */ 10),
+								title: "title01",
+								description: "description"
+							}
+							
+			calendarEvent1 = {
+								dateStart: new Date(/* year */ 2017, /* month */ 01,  /* day */ 09, /* hour */ 12, /* minute */ 30, /* senconds */ 00, /* milliseconds */ 10),
+								dateEnd: new Date(/* year */ 2017, /* month */ 01, /* day */ 09, /* hour */ 13, /* minute */ 30, /* senconds */ 10, /* milliseconds */ 10),
+								title: "title02",
+								description: "description"
+							}
+
+			
+			layOutDay([
+				{event: calendarEvent0},{event: calendarEvent1},
+			]);
+			
+			
+		});
+	</script>
+
+	
+	<style>
+	#calendarDay{
+		margin-top: 0px;
+		width: 100%;
+		height: 540px;
+	}
+	#calendarDay{
+		overflow-y:hidden;
+		max-height:340px;
+	}
+	#calendarDay:hover{
+		overflow-y:scroll;
+		scrollbar-face-color: #4b6ea9;
+		width:108%;
+	}
+	#calendarDay::-webkit-scrollbar{
+		/*
+		https: //codepen.io/GhostRider/pen/GHaFw
+		width:5px;
+		background-color: #4b6ea9;
+		*/
+	}
+	#calendarDay::-webkit-scrollbar-track:hover{
+		/*
+		background-color: #4b6ea9;
+		width:105%;
+		*/
+	}
+	</style>
+	
+	<script type='text/javascript'>
+	
+		$(document).ready(function() {
+			windowSizeWidth = $(window).width();
+			navbarWidth1 = $('.col-md-1').width();
+			navbarWidth5 = $('.col-md-5').width();
+			$('#calendarDay').css('height', $('.col-md-5').height());
+			//alert(navbarWidth);
+			$('#initial-col-md-1').text('initial col-md-1 : '+navbarWidth1);
+			$('#initial-col-md-5').text('initial col-md-5 : '+navbarWidth5+' height : '+$('.col-md-5').height()+' ;');
+			if(windowSizeWidth < 970){
+				$('.navbar-brand').css('margin-left', 5);
+				var navBarMarginRight = (navbarWidth1 * 3);
+				$('.navbar-right').css('margin-right',navBarMarginRight);
+			} else {
+				var navBarMarginLeft = navbarWidth1;
+				$('.navbar-brand').css('margin-left', navBarMarginLeft);
+				var navBarMarginRight = (navbarWidth1 * 3);
+				$('.navbar-right').css('margin-right',navBarMarginRight);
+			}
+
+			/*
+			if(navbarWidth1 < 100) {
+				
+			} else {
+				var navBarMarginRight = (navbarWidth1);
+				$('.navbar-right').css('margin-right',navBarMarginRight);
+			}
+			*/
+			
+			document.addEventListener("keydown", keyDownTextField, false);
+			map = [];
+			function keyDownTextField(e) {
+				//e = e || event; // to deal with IE
+				var keyCode = e.keyCode;
+				//map.push(keyCode);
+				map.length = 0;
+				if(keyCode==9) { //keyCode 91 win; 37 left arrow; 39 right arrow
+				alert("You hit the win logo key."+keyCode);
+				} else if (map.indexOf(91) && map.indexOf(37)){
+				//alert("Oh no you didn't.");
+				map.length = 0;
+				//alert("Oh you hit key code 91 + 37. "+keyCode);
+				}
+			}
+			// http: //stackoverflow.com/questions/5203407/javascript-multiple-keys-pressed-at-once
+			
+			
+			// stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
+			$(window).resize(function() {
+				if(this.resizeTO) clearTimeout(this.resizeTO);
+				this.resizeTO = setTimeout(function() {
+					$(this).trigger('resizeEnd');
+				}, 500);
+			});
+
+			$(window).bind('resizeEnd', function() {
+				$("#width_resizeEnd").text($(this).width());
+				$("#height_resizeEnd").text($(this).height());
+				$("#screen_resizeEnd").text(screen.width+' divide half part : '+(screen.width/2));
+				if( $(this).width() > ( (screen.width )/2) ){
+					var navBarMarginLeft = navbarWidth1;
+					$('.navbar-brand').css('margin-left', navBarMarginLeft);
+					var navBarMarginRight = (navbarWidth1 * 3);
+					$('.navbar-right').css('margin-right',navBarMarginRight);
+					$('#events').css('width','100%');
+					
+					$('#calendarDay').layOutDay({
+					  'calendar_start': (60*9),//540,
+					  'calendar_end': (60*14),//1260,
+					  'time_selector': 'body .time'
+					});
+					$("#calendarDay").hover(function(){
+						$(this).css("width", "108%");
+						}, function(){
+						$(this).css("width", "100%");
+					});
+				}
+			});
+			
+			var doit;//stackoverflow.com/questions/5489946/jquery-how-to-wait-for-the-end-of-resize-event-and-only-then-perform-an-ac
+			function resizedw(){
+				//$("body").append("<br/>did it"+$(window).width()+' screen'+screen.width);
+			}
+			window.onresize = function() {
+				clearTimeout(doit);
+				doit = setTimeout(function() {
+					resizedw();
+				}, 100);
+			};
+			
+			$(window).resize(function(){
+				resizeWindow = $(window).width();
+				resizeNavBar5 = $('.col-md-5').width();
+				resizeNavBar1 = $('.col-md-1').width();
+				//alert(resizeNavBar);
+				$('#actual-col-md-1').text('actual col-md1 : '+resizeNavBar1);
+				$('#actual-col-md-5').text('actual col-md-5 : '+resizeNavBar5+' and height : '+$('.col-md-5').height()+' ;');
+				$('#actual-window').text('actual window : '+resizeWindow);
+				//if(resizeNavBar5 < 768) {
+				if(resizeWindow < 970) {
+					$('.navbar-brand').css('margin-left', 5 );
+					//$('.navbar-brand').css('margin-left', 10 );
+					var navBarMarginRight = (resizeNavBar1 * 2);
+					$('.navbar-right').css('margin-right',navBarMarginRight);
+				} else{
+					$('.navbar-brand').css('margin-left', resizeNavBar1 );
+					//var resizeNavBarMarginRight = (navbarWidth1 * 2);
+					var resizeNavBarMarginRight = (resizeNavBar1 * 2);
+					$('.navbar-right').css('margin-right',resizeNavBarMarginRight);
+					//$('#calendarDay').css('height',$('.col-md-5').height() - 10);
+					$("#calendarDay").css('height', $('.col-md-5 #cover_profile').height() - 15);
+					$("#cover_right_side").css('height', $('.col-md-5').height() );
+					
+					$('#calendarDay').layOutDay({
+					  'calendar_start': (60*9),//540,
+					  'calendar_end': (60*14),//1260,
+					  'time_selector': 'body .time'
+					});
+					
+				}
+				//location.reload();
+			});			
+			
+			
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+			
+			var firstHour = new Date().getUTCHours() - 3;
+
+			renderCalendarHeight = $('.col-md-5').height();
+			renderRatio = 290/renderCalendarHeight;
+			//alert(200/renderCalendarHeight);
+			//$('#tab').css('',calc_width);
+			$(window).resize(function(){
+				resizeCalendar = $('.col-md-5').width();
+				//alert(resizeCalendar);
+				if(resizeCalendar < 800) {
+					//$('#tab').css('width',(resizeCalc -36));
+					//renderCalendarHeight = $('.col-md-5').height();
+					renderCalendarHeight = $('#cover_profile').height();
+					$('#actual-calendar-height').text('actualCalendarHeight is : '+renderCalendarHeight);
+					//renderRatio = 298/renderCalendarHeight;
+					renderRatio = 1;
+					$('#calendar').html('');
+					replaceCalendar = $('#calendar').fullCalendar({
+						header: {
+							left: 'prev,next',
+							center: 'title',
+							right:''
+						},
+						editable: true,
+						defaultView: 'agendaDay',
+						//defaultView: 'agendaWeek',
+						aspectRatio: renderRatio,
+						monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+						monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+						dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+						dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+						firstHour: firstHour,
+						events: [
+							{
+								title: 'All Day Event',
+								start: new Date(y, m, 1)
+							},
+							{
+								title: 'Long Event',
+								start: new Date(y, m, d-5),
+								end: new Date(y, m, d-2)
+							},
+							{
+								id: 999,
+								title: 'Repeating Event',
+								start: new Date(y, m, d-3, 16, 0),
+								allDay: false
+							},
+							{
+								id: 999,
+								title: 'Repeating Event',
+								start: new Date(y, m, d+4, 16, 0),
+								allDay: false
+							},
+							{
+								title: 'Meeting',
+								start: new Date(y, m, d, 10, 30),
+								end: new Date(y, m, d, 11, 30),
+								allDay: false
+							},
+							{
+								title: 'Lunch',
+								start: new Date(y, m, d, 12, 0),
+								end: new Date(y, m, d, 14, 0),
+								allDay: false
+							},
+							{
+								title: 'Birthday Party',
+								start: new Date(y, m, d+1, 19, 0),
+								end: new Date(y, m, d+1, 22, 30),
+								allDay: false
+							},
+							{
+								title: 'Click for Google',
+								start: new Date(y, m, 28),
+								end: new Date(y, m, 29),
+								url: 'http://google.com/'
+							}
+						]
+					});
+					
+				} else {
+					//renderRatio = 280/renderCalendarHeight;
+					renderRatio = 1;
+					$('#calendar').html('');
+					$('#calendar').fullCalendar({
+						header: {
+							left: 'prev,next',
+							center: 'title',
+							right:''
+						},
+						editable: true,
+						defaultView: 'agendaDay',
+						//defaultView: 'agendaWeek',
+						aspectRatio: renderRatio,
+						monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+						monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+						dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+						dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+						firstHour: firstHour,
+						events: [
+							{
+								title: 'All Day Event',
+								start: new Date(y, m, 1)
+							},
+							{
+								title: 'Long Event',
+								start: new Date(y, m, d-5),
+								end: new Date(y, m, d-2)
+							},
+							{
+								id: 999,
+								title: 'Repeating Event',
+								start: new Date(y, m, d-3, 16, 0),
+								allDay: false
+							},
+							{
+								id: 999,
+								title: 'Repeating Event',
+								start: new Date(y, m, d+4, 16, 0),
+								allDay: false
+							},
+							{
+								title: 'Meeting',
+								start: new Date(y, m, d, 10, 30),
+								end: new Date(y, m, d, 11, 30),
+								allDay: false
+							},
+							{
+								title: 'Lunch',
+								start: new Date(y, m, d, 12, 0),
+								end: new Date(y, m, d, 14, 0),
+								allDay: false
+							},
+							{
+								title: 'Birthday Party',
+								start: new Date(y, m, d+1, 19, 0),
+								end: new Date(y, m, d+1, 22, 30),
+								allDay: false
+							},
+							{
+								title: 'Click for Google',
+								start: new Date(y, m, 28),
+								end: new Date(y, m, 29),
+								url: 'http://google.com/'
+							}
+						]
+					});
+				}
+			}); 
+			/*
+			header: {
+					left: 'prev,next today',
+					center: 'title'
+					right: 'month,agendaWeek,agendaDay'
+				},
+			*/
+			
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next',
+					center: 'title',
+					right:''
+				},
+				editable: true,
+				defaultView: 'agendaDay',
+				//defaultView: 'agendaWeek',
+				aspectRatio: renderRatio,
+				monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+				monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+				dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+				dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+				firstHour: firstHour,
+				events: [
+					{
+						title: 'All Day Event',
+						start: new Date(y, m, 1)
+					},
+					{
+						title: 'Long Event',
+						start: new Date(y, m, d-5),
+						end: new Date(y, m, d-2)
+					},
+					{
+						id: 999,
+						title: 'Repeating Event',
+						start: new Date(y, m, d-3, 16, 0),
+						allDay: false
+					},
+					{
+						id: 999,
+						title: 'Repeating Event',
+						start: new Date(y, m, d+4, 16, 0),
+						allDay: false
+					},
+					{
+						title: 'Meeting',
+						start: new Date(y, m, d, 10, 30),
+						end: new Date(y, m, d, 11, 30),
+						allDay: false
+					},
+					{
+						title: 'Lunch',
+						start: new Date(y, m, d, 12, 0),
+						end: new Date(y, m, d, 14, 0),
+						allDay: false
+					},
+					{
+						title: 'Birthday Party',
+						start: new Date(y, m, d+1, 19, 0),
+						end: new Date(y, m, d+1, 22, 30),
+						allDay: false
+					},
+					{
+						title: 'Click for Google',
+						start: new Date(y, m, 28),
+						end: new Date(y, m, 29),
+						url: 'http://google.com/'
+					}
+				]
+			});			
+			
+		});
+	</script>
+
+	<!-- upload and cropimage thumbnail in bootstrap modal -->
+	<script src="dist_files/jquery.imgareaselect.js" type="text/javascript"></script>
+	<link href="dist_files/imgareaselect.css" rel="stylesheet">
+	<script src="dist_files/jquery.form.js"></script>
+	<script src="dist_files/functions.js"></script>
+	
+	<style type="text/css">
+	@media only screen and (max-width: 400px) { .col-xs-4 { width: 50%; }}
+	@media only screen and (max-width: 400px) { #mobile { width: 100%; }}
+	@media only screen and (max-width: 400px) { #mobile_1,#mobile_2 { width: 100%; text-align:center;}}
+	.img-gal{ display: block; }
+	#calendar{
+		width:250px;
+		background-color:#FFFFFF;
+		padding:7px;
+		border:1px solid rgba(144,144,144,0.2);
+	}
+	
+	.fc h2 { font-size: 14px;}
+	#svg-image-blur { height: 200px; width: 200px; }
+    #svg-image { filter:url(#blur-effect-1); }
+	.backgroundBorderBlink{border: 1px dotted #0B85A1; background-color: rgba(144,144,144,0.5);}
+	</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+</head>
+<body>
+	<!--
+	<div class="container-fluid">
+	
+		<h5><img height="20px" width="20px"> username lastname <span><small>+55(11)91234-5678.</small></span><a href="logout.php">Sair (Log Out)</a></h5>
+		
+	</div>
+	-->
+	
+	<nav class="navbar-default" style="background-color:#FFFFFF;">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+				<a class="navbar-brand" href="#"><span id="actualwidth" ></span>
+					<img alt="Brand" src="images/gpapplogo1.png" height="25px" style="margin-top:-3px;width:50px;height:50px;background:url('images/line-icon.png') no-repeat 0 0;"/>
+				</a>
+				<span class="visible-xs" style="margin-top:17px;font-weight:bold;font-size:16px;">uatiszap</span>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li style="font-weight:bold;font-size:20px;font-family:oxygen,tahoma;"><a class="visible-md visible-lg" href="main.php">uatiszap <span class="sr-only">(current)</span></a> <a class="visible-xs" href="logout.php" style="font-size:14px;"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out <i style="font-size:11px;">(Sair)</i> </a></li>
+				</ul>
+				<form class="navbar-form navbar-left visible-md visible-lg">
+				<div class="form-group">
+				  <input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Search</button>
+				</form>
+				
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" style="width:150%;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="images/900000202/profile_thumbnail_app2.png" height="25px" alt="nil" style="margin-top:-3px;">
+							<?php echo $EditUserProfile->username;?> <span class="glyphicon glyphicon-menu-down"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="edit_profile.php?id=<?php echo $EditUserProfile->identification;?>" style="padding:10px;"><span class="glyphicon glyphicon-edit"></span> &nbsp; Edit Profile</a></li>
+							<li><a href="boleto/boleto_itau_3meses.php" target="_blank" style="padding:10px;"><span class="glyphicon glyphicon-usd"></span> &nbsp; Payments</a></li>
+							<li><a href="analytics_profile.php?id=<?php echo $EditUserProfile->identification;?>" style="padding:10px;"><span class="glyphicon glyphicon-stats"></span> &nbsp; Analytics <i style="font-size:11px;">(estat&iacute;sticas)</i></a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="logout.php" style="padding:10px;"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out <i style="font-size:11px;">(Sair)</i> </a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+	
+
+	<div class="row" style="background:rgba(144,144,144,0.075);border-top:1px solid rgba(144,144,144,0.2);">
+		<div class="col-xs-3 col-sm-2 col-md-1"></div>
+		<div class="col-md-5" id="cover_profile" style="padding-right: 1px;">
+			<div class="parent">
+				<div>
+					
+						<div class="profile-pic" id="upload_cover" style="cursor:pointer;">
+							<img class="img-responsive" src="images/900000202/cover_profile.png" style="margin:0 auto;">
+							<div class="edit">
+								<a><i class="fa fa-camera fa-lg"></i></a>
+							</div>
+						</div>
+						
+							
+											<div id="profile_cover_modal" class="modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							   Change Profile Cover Picture
+							</div>
+							<div class="modal-body">
+							
+								<form id="cropimagecover" method="post" enctype="multipart/form-data" action="change_cover_pic.php">
+									Upload Image: <br/>
+									<input type="file" name="profile-pic-cover" id="profile-pic-cover" />
+									<input type="hidden" name="hdn-profile-id-cover" id="hdn-profile-id-cover" value="2" />
+									<input type="hidden" name="hdn-x1-axis-cover" id="hdn-x1-axis-cover" value="" />
+									<input type="hidden" name="hdn-y1-axis-cover" id="hdn-y1-axis-cover" value="" />
+									<input type="hidden" name="hdn-x2-axis-cover" value="" id="hdn-x2-axis-cover" />
+									<input type="hidden" name="hdn-y2-axis-cover" value="" id="hdn-y2-axis-cover" />
+									<input type="hidden" name="hdn-thumb-width-cover" id="hdn-thumb-width-cover" value="" />
+									<input type="hidden" name="hdn-thumb-height-cover" id="hdn-thumb-height-cover" value="" />
+									<input type="hidden" name="cover-action" value="" id="cover-action" />
+									<input type="hidden" name="image_name_cover" value="" id="image_name_cover" />
+
+									<div id="preview-profile-pic-cover" style="margin-top:5px;text-align:center"></div>
+								<div id="thumbs-cover" style="padding:5px; width:600px;"></div>
+								</form>
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="cancel_cover_crop" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" id="save_cover_crop" class="btn btn-primary">Crop & Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				</div>
+				<div style="margin:0 auto;padding:3%;border:1px solid rgba(144,144,144,0.25);background:#FFFFFF;">
+					<table>
+						<tr>
+							<td>
+								<div class="itemsContainer"  id="upload_imagecrop" style="cursor:pointer;border:1px solid rgba(144,144,144,0.2);border-radius:5px;">
+									<div class="image">
+										<a><img src="images/profile.jpg" class="img-thumbnail" style="height:100px;width:100px;"></a>
+									</div>
+									<div class="play">
+										<a><i class="fa fa-pencil fa-lg"></i></a>
+									</div>
+								</div>
+							</td>
+							<td>
+								<table>
+								<tr>
+									<td style="padding-left:15px;">
+										
+										<?php
+											if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+												<?php
+													echo
+													'<div class="itemsContainer">
+														<div class="image">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'">'.$EditUserProfile->username.'</a>
+														</div>
+														<div class="play">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><i class="fa fa-pencil fa-lg"></i></a>
+														</div>
+													</div>';
+												?>
+											<?php }
+											else {  ?>
+												<?php echo $UserProfile->username;
+												?>
+											<?php
+												}
+										?>
+										<br>
+										<?php
+											// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+											if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+												<?php //echo $EditUserProfile->username;
+													echo
+													'<div class="itemsContainer">
+														<div class="image">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'">'.$EditUserProfile->phone.'</a>
+														</div>
+														<div class="play">
+															<a href="edit_profile.php?id='.$EditUserProfile->identification.'"><span class="fa fa-pencil fa-lg"></span></a>
+														</div>
+													</div>';
+												?>
+											<?php }
+											else {  ?>
+												<?php echo $UserProfile->phone;
+												?>
+											<?php
+												}
+										?>
+										
+									</td>
+									
+								</tr>
+								</table>
+							</td>
+						</tr>
+						
+					</table>
+					
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-5" style="padding:5px 5px 0 5px;">
+			<!--
+			<div style="font-size:12px">
+				<div class="col-xs-6 col-md-2 text-nowrap">
+					<?php //echo "Idade : ".$EditUserProfile->age." anos"; ?>
+				</div>
+				<div class="col-xs-6 col-md-2 text-nowrap">
+					<?php //echo "Altura : ".$EditUserProfile->height." m"; ?>
+				</div>
+				<div class="col-xs-6 col-md-2 text-nowrap">
+					<a href="#" data-toggle="tooltip" data-placement="right" title="edit"><?php echo "Weight : ".$EditUserProfile->weight." kg"; ?></a>
+				</div>
+				<div class="col-xs-6 col-md-2 text-nowrap">1h : R$250</div>
+			</div>
+			-->
+			<!--
+			<div id="img-gal" class="col-sm-3 col-xs-4 thumb" style="padding:2px;" > 
+				<a href="#"> 
+					<img class="img-responsive" src="http://placehold.it/200x200" alt=""> 
+				</a> 
+			</div>
+			<div id="img-gal" class="col-sm-3 col-xs-4 thumb" style="padding:2px;" > 
+				<a href="#"> 
+					<img class="img-responsive" src="http://placehold.it/200x200" alt=""> 
+				</a> 
+			</div>
+			<div id="img-gal" class="col-sm-3 col-xs-4 thumb" style="padding:2px;" > 
+				<a href="#"> 
+					<img class="img-responsive" src="http://placehold.it/200x200" alt=""> 
+				</a> 
+			</div>
+			<div id="img-gal" class="col-sm-3 col-xs-4 thumb" style="padding:2px;" > 
+				<a href="#"> 
+					<img class="img-responsive" src="http://placehold.it/200x200" alt=""> 
+				</a> 
+			</div>
+			-->
+			
+			<div class="row" id="cover_right_side">
+				<div class="col-md-5 col-xs-6" id="mobile_1">
+					<!--  <div id="calendar" ></div>  -->
+					
+					<div style="text-align:right;margin:-5px 0 2px 0;font-size:0.7em;">
+					<?php 
+						setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+						echo strftime('%A, %d de %B', strtotime('today'));
+					?></div>
+					<div id="calendarDay"></div>
+					<div class="time">
+						<ul>
+							<li>9:00 <span>AM</span></li>
+							<li class="halfhour">9:30</li>
+							<li>10:00 <span>AM</span></li>
+							<li class="halfhour">10:30</li>
+							<li>11:00 <span>AM</span></li>
+							<li class="halfhour">11:30</li>
+							<li>12:00 <span>PM</span></li>
+							<li class="halfhour">12:30</li>
+							<li>1:00 <span>PM</span></li>
+							<li class="halfhour">1:30</li>
+							<li>2:00 <span>PM</span></li>
+							<li class="halfhour">2:30</li>
+							<li>3:00 <span>PM</span></li>
+							<!--
+							<li class="halfhour">3:30</li>
+							<li>4:00 <span>PM</span></li>
+							<li class="halfhour">4:30</li>
+							<li>5:00 <span>PM</span></li>
+							<li class="halfhour">5:30</li>
+							<li>6:00 <span>PM</span></li>
+							<li class="halfhour">6:30</li>
+							<li>7:00 <span>PM</span></li>
+							<li class="halfhour">7:30</li>
+							<li>8:00 <span>PM</span></li>
+							<li class="halfhour">8:30</li>
+							<li>9:00 <span>PM</span></li>
+							-->
+						</ul>
+					</div>
+					
+					
+				</div>
+				<div class="col-md-4 col-xs-6" id="mobile_2">
+					<img src="images/ousked_hitch_deere_logo11-200px-200px.jpg" height="150px" width="150px" style="margin-left:5px;border:1px solid rgba(144,144,144,0.3);" />
+					<img src="images/ouskedhitch/camiseta-branca-homem-ousked-hitch.jpg" height="200px" width="200px" style="margin-left:5px;margin-top:5px;border:1px solid rgba(144,144,144,0.3);" />
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	<!--
+	<div class="jumbotron text-center">
+		<h4>Username lastname &nbsp <small>+55(11)91234-5678</small></h4>
+	</div>
+	-->
+	
+	<div class="container-fluid" style="background:rgba(144,144,144,0.075);">
+		
+		<div class="" style="font-size:13px;"><!-- main font Oxygen, option Verdana -->
+			
+			<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-xs-12 col-sm-9" style="background-color:#FFFFFF;border-top:1px solid rgba(144,144,144,0.2);margin-top:5px;">
+				
+					<div class="col-xs-4 col-md-2 text-nowrap">
+						<?php
+							// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+							if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+								<?php //echo $EditUserProfile->username;
+									echo
+									'<div class="itemsContainer" id="Age">
+										<div class="image">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'#anchor-edit">Age : '.$EditUserProfile->age.' yr</a>
+										</div>
+										<div class="play">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'#anchor-edit" class="edit-description" id="'.$EditUserProfile->age.'"><span class="fa fa-pencil fa-lg"></span></a>
+										</div>
+									</div>';
+								?>
+							<?php }
+							else {  ?>
+								<?php echo "Age : ".$UserProfile->age."yr";
+								?>
+							<?php
+								}
+						?>
+					</div>
+					<script type="text/javascript">
+					/*
+					var onclick_edit01 = document.getElementById('edit-description01');
+					onclick_edit01.onclick = function(e){
+						e.preventDefault();
+						$(this).parent().parent().replaceWith(
+							'<form>'
+							+'Age : <input type="text" value="<?php echo $EditUserProfile->age; ?>" style="width:20px;box-sizing:border-box;padding:0 0 5px 2px;"/> yr '
+							//+'<input name="saveEdit" type="submit" value="Salvar" style="background: #4B99AD;padding: 0 6px;border: none;color:#FFFFFF;border-radius:3px;font-size: 11px;font-weight:bold;"/>'
+							+'<input name="saveEdit" value="salvar" type="submit" class="btn btn-primary" style="height:20px;width:50px;padding:0 2px;font-size;0.8em;"/>'
+						+'</form>');
+						
+					}
+					*/
+					/*
+					function edit(parameter){
+						preventDefault();
+						switch(parameter){
+							case description01 :
+								var input_value = "";
+								alert(input_value);
+								break;
+							case description02 :
+								var input_value = "";
+								alert(input_value);
+								break;
+							default:
+								var input_value = "";
+						}
+						
+					}
+					*/
+					</script>
+					<div class="col-xs-4 col-md-2 text-nowrap">
+						<?php
+							// http:/  jsfiddle.net/Guruprasad_Rao/2s8yqys7/1/
+							if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+								<?php //echo $EditUserProfile->username;
+									echo
+									'<div class="itemsContainer" id="Height">
+										<div class="image">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'">Height : '.$EditUserProfile->height.' m</a>
+										</div>
+										<div class="play">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'" class="edit-description" id="'.$EditUserProfile->height.'"><i class="fa fa-pencil fa-lg"></i></a>
+										</div>
+									</div>';
+								?>
+							<?php }
+							else {  ?>
+								<?php echo "Height : ".$UserProfile->age." m";
+								?>
+							<?php
+								}
+						?>
+					</div>
+					<script type="text/javascript">
+					/*
+					var onclick_edit02 = document.getElementById('edit-description02');
+					onclick_edit02.onclick = function(e){
+						e.preventDefault();
+						$(this).parent().parent().replaceWith(
+							'<form>'
+							+'Height : <input type="text" value="<?php echo $EditUserProfile->height; ?>" style="width:30px;box-sizing:border-box;padding:0 0 5px 2px;"/> feet '
+							+'<input name="saveEdit" type="submit" value="save" style="background: #4B99AD;padding: 0 6px;border: none;color:#FFFFFF;border-radius:3px;font-size: 11px;font-weight:bold;" />'
+						+'</form>');
+						
+					}
+					*/
+					</script>
+					<div class="col-xs-4 col-md-2 text-nowrap"> 
+						<?php
+							if ($_SESSION['id_of_user']==$_GET['id']){  ?>
+								<?php
+									echo
+									'<div class="itemsContainer" id="Weight">
+										<div class="image">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'">Weight : <span class="input-edit">'.$EditUserProfile->weight.'</span> kg</a>
+										</div>
+										<div class="play">
+											<a href="edit_profile.php?id='.$EditUserProfile->identification.'" name="Weight" class="edit-description" id="'.$EditUserProfile->weight.'"><i class="fa fa-pencil fa-lg"></i></a>
+										</div>
+									</div>';
+								?>
+							<?php }
+							else {  ?>
+								<?php echo $UserProfile->weight;
+								?>
+							<?php
+								}
+						?>
+					</div>
+					<script type="text/javascript">
+					/*
+					var onclick_edit03 = document.getElementById('edit-description03');
+					onclick_edit03.onclick = function(e){
+						e.preventDefault();
+						$(this).parent().parent().replaceWith(
+							'<form>'
+							+'Weight : <input type="text" value="<?php echo $EditUserProfile->weight; ?>" style="width:20px;box-sizing:border-box;padding:0 0 5px 2px;"/> kg '
+							+'<input name="saveEdit" type="submit" value="save" style="background: #4B99AD;padding: 0 6px;border: none;color:#FFFFFF;border-radius:3px;font-size: 11px;font-weight:bold;" />'
+						+'</form>');
+					}
+					*/
+					var onclick_edit = document.getElementsByClassName('edit-description');
+					var i;
+					for (i = 0; i < onclick_edit.length; i++) {
+						onclick_edit[i].style.backgroundColor = "yellow";
+						onclick_edit[i].onclick = function(e){
+							e.preventDefault();
+							//alert(JSON.stringify( $(this).parent().parent().first().children() ));
+							try{
+								var desc_value = $(this).attr('id') ;
+								var desc_edit = $(this).parent().parent().attr('id');
+							} catch(err) {
+								alert(err.message);
+							}
+							
+							$(this).parent().parent().replaceWith(
+								'<form>'
+								+desc_edit+' : <input type="text" value="'+desc_value+'" style="display:inline;width:20px;box-sizing:border-box;padding:0 0 5px 2px;"/> kg '
+							+'</form>');
+							
+							if( $('#input-submit-edit').children().length == 0){
+								//alert(JSON.stringify( $('#input-submit-edit').children().length ) );
+								$('#input-submit-edit').append(
+									'<div style="text-align:right;padding:5px;">'
+									+'<input name="saveEdit" type="submit" value="save" style="background: #4B99AD;padding: 0 6px;border: none;color:#FFFFFF;border-radius:3px;font-size: 11px;font-weight:bold;" />'
+									+'&nbsp; <button class="btn btn-default">Cancel</button>'
+								+'</div>');
+
+							}							
+						}
+					}
+					</script>
+					<div class="col-xs-4 col-md-2 text-nowrap">Hair : blond</div> <!-- style="border-left:2px solid #BEBEBE;" -->
+					<div class="col-xs-4 col-md-2 text-nowrap">Feet size : 37</div>
+					<div class="col-xs-4 col-md-2 text-nowrap">Feet size : 37</div>
+				
+			</div>
+			<div class="col-sm-2"></div>
+			</div>
+			
+			<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-xs-12 col-sm-9" style="background-color:#FFFFFF;border-bottom:1px solid rgba(144,144,144,0.2);">
+			
+				
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile">Allow smoke : Yes</div>
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile" style="background-color:lavender;">Price : R$250</div>
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile">travel : available YES</div>
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile">Do this : YES</div>
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile">available : full time</div>
+				<div class="col-xs-4 col-md-2 text-nowrap" id="mobile">available : full time</div>
+				
+			
+			</div>
+			<div class="col-sm-2"></div>
+			</div>
+			
+			<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-xs-12 col-sm-9" id="input-submit-edit" style="background-color:#FFFFFF;border-bottom:1px solid rgba(144,144,144,0.2);"></div>
+			<div class="col-sm-2"></div>
+			</div>
+			
+		</div>
+		
+		<div class="" style="font-size:13px;"><!-- main font Oxygen, option Verdana -->
+			
+			<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-3" style="margin-top:5px;padding:0 5px 0 0;">
+				ousked &amp; hitch
+				<div style="background-color:#FFFFFF;padding:5px;">hello feibook easyshare.net</div>
+				<span id="initial-col-md-1" ></span>
+				<span id="actual-col-md-1" ></span>
+				<br>
+				<span id="initial-col-md-5" ></span>
+				<span id="actual-col-md-5" ></span>
+				<span id="actual-window" ></span>
+				<br>
+				<span id="actual-calendar-height" ></span>
+				<br/>
+				width_resizeEnd : <span id="width_resizeEnd" ></span>
+				height_resizeEnd : <span id="height_resizeEnd" ></span>
+				screen_resizeEnd : <span id="screen_resizeEnd" ></span>
+				
+			</div>
+			<div class="col-sm-6" style="margin-top:5px;padding:0;">
+				<div class="grid-gallery">
+					<div class="caixaPhoto">
+						<div class="conPhoto">
+							<div class="pdPhoto">
+								<div class="sharePhoto">Galeria de Foto </div>
+								<div class="statusPhoto" ></div>
+								<div class="loadingPhoto"></div>
+							</div>
+							<div class="img_topPhoto"></div>
+							<div class="text_statusPhoto">
+								<div id="two-column">
+
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="container_sPhoto">
+							<div id="divtoBlink">
+								<?php echo $sPhotos; ?>
+							</div>
+						</div>
+				</div>
+				<script type="text/javascript">
+				var obj = $(".container_sPhoto");
+				obj.css("border","1px solid none");
+				function setColor() {
+					var x = document.body;
+					x.style.backgroundColor = x.style.backgroundColor == "yellow" ? "rgba(144,144,144,0.075)" : "yellow";
+				}
+				function makeBlink() { 
+					setInterval(function () {
+						$("#divtoBlink").css("background-color", function () {
+							this.switch = !this.switch
+							return this.switch ? "red" : ""
+						});
+					}, 500);
+				}
+				function stopMakeBlink(){
+					clearInterval();
+				}
+				function stopColor() {
+					clearInterval(myVar);
+					var x = document.body;
+					x.style.backgroundColor = "rgba(144,144,144,0.075)";
+				}
+				obj.on('dragenter', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+					//$(this).css('border', '2px dotted #0B85A1');
+					myVar = setInterval(function(){ setColor() }, 500);
+					//myMakeBlink = setInterval(function(){ makeBlink() }, 500);
+					varStopMakeBlink = setInterval(function () {
+						$("#divtoBlink").css("background-color", function () {
+							this.switch = !this.switch
+							return this.switch ? "red" : ""
+						});
+					}, 500);
+				});
+				obj.on('dragover', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+				});
+				obj.on('dragleave', function (e) 
+				{
+					e.stopPropagation();
+					e.preventDefault();
+					//$(this).css('border', 'none');
+					stopColor();
+					clearInterval(varStopMakeBlink);
+					$("#divtoBlink").css("background-color","");
+				});
+				
+				obj.on('drop', function (e) 
+				{
+					var stopblink = clearInterval(this.blink);
+					 $(this).css('border', '2px dotted #0B85A1');
+					 e.preventDefault();
+					 var files = e.originalEvent.dataTransfer.files;
+				 
+					 //We need to send dropped files to Server
+					 //handleFileUpload(files,obj);
+					 alert("dropped some file !");
+				});
+				</script>
+			</div>
+			<div class="col-sm-2"></div>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			
+			<div class="col-sm-1"></div>
+			
+			<div class="col-sm-3">
+				<h5>Agenda</h5>
+				<div>
+					<img class="img-circle" id="profile_picture" data-src="default.jpg"  data-holder-rendered="true" style="width: 100px; height: 100px;" src="images/default.jpg"/>
+					<br>
+					<a type="button" class="btn btn-primary" id="change-profile-pic">Change Profile Picture</a>
+				</div>
+				<div id="profile_pic_modal" class="modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							   Change Profile Picture
+							</div>
+							<div class="modal-body">
+								<!--  <input type="file" /> input file show alert script below
+								<script type="text/javascript">
+									//http://jsfiddle.net/pimvdb/eD2Ez/2/
+									//http://jsfiddle.net/8C4UB/
+									$('input').change(function() {
+										var u = URL.createObjectURL(this.files[0]);
+										var img = new Image();
+										img.onload = function() {
+											alert(img.width);
+										};
+										img.src = u;								
+									});
+								</script>
+								 -->
+								<form id="cropimage" method="post" enctype="multipart/form-data" action="change_pic.php">
+									Upload Image: <br>
+									<input type="file" name="profile-pic" id="profile-pic" />
+									<input type="hidden" name="hdn-profile-id" id="hdn-profile-id" value="1" />
+									<input type="hidden" name="hdn-x1-axis" id="hdn-x1-axis" value="" />
+									<input type="hidden" name="hdn-y1-axis" id="hdn-y1-axis" value="" />
+									<input type="hidden" name="hdn-x2-axis" value="" id="hdn-x2-axis" />
+									<input type="hidden" name="hdn-y2-axis" value="" id="hdn-y2-axis" />
+									<input type="hidden" name="hdn-thumb-width" id="hdn-thumb-width" value="" />
+									<input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value="" />
+									<input type="hidden" name="action" value="" id="action" />
+									<input type="hidden" name="image_name" value="" id="image_name" />
+									
+									<div id="preview-profile-pic" style="margin-top:5px"></div>
+								<div id="thumbs" style="padding:5px; width:600px;"></div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="cancel_crop" class="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="button" id="save_crop" class="btn btn-primary">Crop & Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+				<div style="width:70px;height:55px;background:url('images/education-icons.png') no-repeat -170px -130px;border:1px dotted red;"></div>
+				
+				<svg id="svg-image-blur">
+					<image x="10" y="10" id="svg-image" width="200px" height="200px" xlink:href="images/1.jpg" />
+
+					<filter id="blur-effect-1">
+						<feGaussianBlur stdDeviation="2" />
+					</filter>
+				</svg> 
+				
+			</div>
+			
+			<div class="col-sm-6">
+				<!--  <h6 >&nbsp Photo gallery</h6>  -->
+				
+				<div class="grid-gallery">
+					<div class="caixaPhoto">
+						<div class="conPhoto">
+							<div class="pdPhoto">
+								<div class="sharePhoto">Galeria de Foto </div>
+								<div class="statusPhoto" ></div>
+								<div class="loadingPhoto"></div>
+							</div>
+							<div class="img_topPhoto"></div>
+							<div class="text_statusPhoto">
+								<div id="two-column">
+
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="container_sPhoto">
+							<?php echo $sPhotos; ?>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div id="gallery" class="container">
+  <h5>Image Gallery</h5>
+  <p>The .thumbnail class can be used to display an image gallery. Click on the images to see it in full size:</p>            
+  <div class="row">
+    <div class="col-md-3">
+      <a href="pulpitrock.jpg" class="thumbnail">
+        <p>Agenda</p>    
+        <img src="pulpitrock.jpg" alt="Pulpit Rock" style="width:150px;height:150px">
+      </a>
+    </div>
+    <div class="col-md-5">
+      <a href="moustiers-sainte-marie.jpg" class="thumbnail">
+        <p>Main Photo Gallery</p>
+			
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="cinqueterre.jpg" class="thumbnail">
+        <p>Maps, Services</p>      
+        <img src="cinqueterre.jpg" alt="Cinque Terre" style="width:150px;height:150px">
+      </a>
+    </div>
+  </div>
+</div>
+	
+</body>
+</html>
