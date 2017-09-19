@@ -21,7 +21,8 @@ https://enghamilton.github.io/dragdropjavascript/analytics.html
 
 https://enghamilton.github.io/dragdropjavascript/boleto_3meses.html
 
-Simple image crop image using javascript imgareaselect.
+Recorte de área de foto, gera uma área quadrada ou retângular para selecionar parte de uma foto, útil para exibição
+de face de usuário ou para exibir parte relevante de uma imagem.Simple image crop image using javascript imgareaselect.
 
 https://enghamilton.github.io/dragdropjavascript/userprofile_crop_image.html
 
