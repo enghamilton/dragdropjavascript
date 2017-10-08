@@ -1,19 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html ng-app="myApp">
 	<head>
 		<title>My AngularJS App</title>
-		
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.6.2.js"></script>
-		<!--
-		use jquery version 1.10.2 to drag drop in google chrome browser version 60.0.3112.113 .
-		https://stackoverflow.com/questions/20487021/jquery-drag-and-drop-not-working-properly-in-chrome-browser-when-code-placed-in
-
-		jquery version 1.6.10 works in IE 10.
-		-->
-		<!-- <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
-
+		<script   src="undefined/ui/1.8.24/jquery-ui.min.js"   integrity="sha256-UOoxwEUqhp5BSFFwqzyo2Qp4JLmYYPTHB8l+1yhZij8="   crossorigin="anonymous"></script> 
 		<style>
 		.red {
 			background-color: red;
@@ -33,7 +24,7 @@
 	<body>
     <div id="drag" draggable="true">drag me</div>
 	<hr>
-	<div id="drop" draggable="true">
+	<div id="drop">
 		drop here
 		<p>child</p>
 		parent
