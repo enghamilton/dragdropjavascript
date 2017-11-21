@@ -22,7 +22,7 @@ boleto bancário.
 https://enghamilton.github.io/dragdropjavascript/analytics.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
-https://enghamilton.github.io/dragdropjavascript/boleto_3meses.html
+https://enghamilton.github.io/dragdropjavascript/boleto_3_meses.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
 Recorte de área de foto, clicando gera uma área quadrada ou retângular que pode ser redimensionada para selecionar 
