@@ -22,6 +22,8 @@ boleto bancário.
 https://enghamilton.github.io/dragdropjavascript/analytics.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
+https://enghamilton.github.io/dragdropjavascript/boleto_3_parcelas.html
+
 https://enghamilton.github.io/dragdropjavascript/boleto_3_meses.html
 Testado no IE10 e Chrome (laptop 13" tela Windows 7).
 
